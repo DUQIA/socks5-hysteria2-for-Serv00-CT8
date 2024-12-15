@@ -42,11 +42,11 @@ else
   fi
 
   # Socks5 的重启任务
-  if [ -f "${FILE_PATH}/config.json" ]; then
-    echo "添加 Socks5 的 crontab 重启任务"
-    add_cron_job "@reboot pkill -kill -u $USER && ${CRON_S5}"
-    add_cron_job "*/12 * * * * pgrep -x \"s5\" > /dev/null || ${CRON_S5}"
-  fi
+  # if [ -f "${FILE_PATH}/config.json" ]; then
+  #   echo "添加 Socks5 的 crontab 重启任务"
+  #   add_cron_job "@reboot pkill -kill -u $USER && ${CRON_S5}"
+  #   add_cron_job "*/12 * * * * pgrep -x \"s5\" > /dev/null || ${CRON_S5}"
+  # fi
   if [ -e "${FILE_PATH_s5}/config.json" ]; then
     echo "添加 Socks5 的 crontab 重启任务"
     (crontab -l | grep -F "@reboot pkill -kill -u $(whoami) && ${CRON_S5}") || (crontab -l; echo "@reboot pkill -kill -u $(whoami) && ${CRON_S5}") | crontab -
@@ -54,15 +54,15 @@ else
   fi
 
   # Hysteria 的重启任务
-  if [ -f "${HYSTERIA_CONFIG}" ]; then
-    echo "添加 Hysteria 的 crontab 重启任务"
-    add_cron_job "@reboot pkill -kill -u $USER && ${CRON_HYSTERIA}"
-    add_cron_job "*/12 * * * * pgrep -x \"web\" > /dev/null || ${CRON_HYSTERIA}"
-  fi
+  # if [ -f "${HYSTERIA_CONFIG}" ]; then
+  #   echo "添加 Hysteria 的 crontab 重启任务"
+  #   add_cron_job "@reboot pkill -kill -u $USER && ${CRON_HYSTERIA}"
+  #   add_cron_job "*/12 * * * * pgrep -x \"web\" > /dev/null || ${CRON_HYSTERIA}"
+  # fi
   if [ -e "${HYSTERIA_CONFIG_hysteria}" ]; then
     echo "添加 Hysteria 的 crontab 重启任务"
     (crontab -l | grep -F "@reboot pkill -kill -u $(whoami) && ${CRON_HYSTERIA}") || (crontab -l; echo "@reboot pkill -kill -u $(whoami) && ${CRON_HYSTERIA}") | crontab -
-    (crontab -l | grep -F "* * pgrep -x \"web\" > /dev/null || ${CRON_HYSTERIA}") || (crontab -l; echo "*/12 * * * * pgrep -x \"hysteria\" > /dev/null || ${CRON_HYSTERIA}") | crontab -
+    (crontab -l | grep -F "* * pgrep -x \"web\" > /dev/null || ${CRON_HYSTERIA}") || (crontab -l; echo "*/12 * * * * pgrep -x \"web\" > /dev/null || ${CRON_HYSTERIA}") | crontab -
   fi
 fi
 
