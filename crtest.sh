@@ -32,21 +32,21 @@ else
   # 分别添加每个服务的 crontab 任务
 
   # Nezha 的重启任务
-  if [ -f "${WORKDIR}/start.sh" ]; then
+  if [ -f "${WORKDIR}/start.sh" || -e "${WORKDIR}/start.sh" ]; then
     echo "添加 Nezha 的 crontab 重启任务"
     add_cron_job "@reboot pkill -kill -u $USER && ${CRON_NEZHA}"
     add_cron_job "*/12 * * * * pgrep -x \"nezha-agent\" > /dev/null || ${CRON_NEZHA}"
   fi
 
   # Socks5 的重启任务
-  if [ -f "${FILE_PATH}/config.json" ]; then
+  if [ -f "${FILE_PATH}/config.json" || -e "${FILE_PATH}/config.json" ]; then
     echo "添加 Socks5 的 crontab 重启任务"
     add_cron_job "@reboot pkill -kill -u $USER && ${CRON_S5}"
     add_cron_job "*/12 * * * * pgrep -x \"s5\" > /dev/null || ${CRON_S5}"
   fi
 
   # Hysteria 的重启任务
-  if [ -f "$HYSTERIA_CONFIG" ]; then
+  if [ -f "${HYSTERIA_CONFIG}" -e "${HYSTERIA_CONFIG}" ]; then
     echo "添加 Hysteria 的 crontab 重启任务"
     add_cron_job "@reboot pkill -kill -u $USER && ${CRON_HYSTERIA}"
     add_cron_job "*/12 * * * * pgrep -x \"web\" > /dev/null || ${CRON_HYSTERIA}"
